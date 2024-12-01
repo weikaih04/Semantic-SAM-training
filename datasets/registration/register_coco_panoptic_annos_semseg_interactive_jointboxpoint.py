@@ -169,7 +169,7 @@ def register_all_coco_panoptic_annos_sem_seg(root):
         register_coco_panoptic_annos_sem_seg(
             prefix,
             get_metadata(),
-            image_root,
+            os.path.join(root, "coco/val2017"),
             os.path.join(root, panoptic_root),
             os.path.join(root, panoptic_json),
             os.path.join(root, semantic_root),

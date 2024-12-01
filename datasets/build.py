@@ -413,9 +413,9 @@ def build_train_dataloader(cfg, ):
         mapper_name = cfg['INPUT']['DATASET_MAPPER_NAME']
         # Sam data dataset mapper
         if mapper_name == "sam":
-            # print("using SamBaselineDatasetMapperJSON")
-            # mapper = SamBaselineDatasetMapperJSON(cfg, True)
-            mapper = SamBaselineDatasetMapper(cfg, True)
+            print("using SamBaselineDatasetMapperJSON")
+            mapper = SamBaselineDatasetMapperJSON(cfg, True)
+            # mapper = SamBaselineDatasetMapper(cfg, True)
             loaders['sam'] = build_detection_train_loader(cfg, dataset_name=dataset_name, mapper=mapper)
         elif mapper_name == "pascal_part":
             mapper = MaskFormerInstanceDatasetMapper(cfg, True)

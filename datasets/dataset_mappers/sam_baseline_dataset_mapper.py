@@ -154,8 +154,8 @@ class SamBaselineDatasetMapper:
                     if tsv.split('.')[-1] == 'tsv':
                         self.tsv[i] = TSVFile(f"{_root}/{tsv}")
         else:
-            if self.is_train:
-                assert not self.is_train, 'can not train without SA-1B datasets, please export'
+            # if self.is_train:
+            #     assert not self.is_train, 'can not train without SA-1B datasets, please export'
             print("Not avalible SA-1B datasets. Skip dataset mapper preparing")
 
         self.img_format = image_format
