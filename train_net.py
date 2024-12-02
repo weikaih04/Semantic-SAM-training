@@ -28,6 +28,9 @@ from detectron2.config import get_cfg, CfgNode
 from detectron2.projects.deeplab import add_deeplab_config, build_lr_scheduler
 from detectron2.utils.logger import setup_logger
 from detectron2.config import LazyConfig, instantiate
+# add wandb
+from detectron2.utils.events import CommonMetricPrinter, JSONWriter
+from semantic_sam.utils.events import WandbWriter, setup_wandb
 
 # dataloader and evaluator
 from datasets import (
@@ -160,6 +163,31 @@ class Trainer(DefaultTrainer):
     @classmethod
     def build_train_loader(cls, cfg):
         return build_train_dataloader(cfg, )
+
+    def build_writers(self):
+        """
+        Build a list of writers to be used. By default it contains
+        writers that write metrics to the screen,
+        a json file, and a tensorboard event file respectively.
+        If you'd like a different list of writers, you can overwrite it in
+        your trainer.
+        Returns:
+            list[EventWriter]: a list of :class:`EventWriter` objects.
+        It is now implemented by:
+        ::
+            return [
+                CommonMetricPrinter(self.max_iter),
+                JSONWriter(os.path.join(self.cfg.OUTPUT_DIR, "metrics.json")),
+                TensorboardXWriter(self.cfg.OUTPUT_DIR),
+            ]
+        """
+        # Here the default print/log frequency of each writer is used.
+        return [
+            # It may not always print what you want to see, since it prints "common" metrics only.
+            CommonMetricPrinter(self.max_iter),
+            JSONWriter(os.path.join(self.cfg.OUTPUT_DIR, "metrics.json")),
+            WandbWriter(),
+        ]
 
     @classmethod
     def build_test_loader(cls, cfg, dataset_name):
@@ -386,6 +414,8 @@ def setup(args):
     cfg = LazyConfig.apply_overrides(cfg, args.opts)
     # cfg.freeze()
     default_setup(cfg, args)
+    if not args.eval_only:
+        setup_wandb(cfg, args)
     setup_logger(output=cfg.OUTPUT_DIR, distributed_rank=comm.get_rank(), name="maskdino")
     return cfg
 
