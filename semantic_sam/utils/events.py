@@ -2,10 +2,14 @@ import os
 import wandb
 from detectron2.utils import comm
 from detectron2.utils.events import EventWriter, get_event_storage
+from detectron2.config import CfgNode as CN
 
 
 def setup_wandb(cfg, args):
     if comm.is_main_process():
+        cfg.WANDB = CN()
+        cfg.WANDB.PROJECT = "Semantic-sam-training"
+        cfg.WANDB.NAME = None
         init_args = {
             k.lower(): v
             for k, v in cfg.WANDB.items()
