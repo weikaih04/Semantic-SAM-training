@@ -1,6 +1,11 @@
 n=${1:-8}
-stage1_iter=${2:10000}
-stage2_iter=${3:10000}
+stage1_iter=${2:-10000}
+stage2_iter=${3:-10000}
+
+echo "Number of GPUs: $n"
+echo "Stage 1 Iterations: $stage1_iter"
+echo "Stage 2 Iterations: $stage2_iter"
+
 export SAM_JSON="/tmp_dataset"
 export SAM_DATASETS="/tmp_dataset"
 export DATASET="/datasets"
