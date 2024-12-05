@@ -11,7 +11,7 @@ WEIGHT: ''
 PORT: 53711
 VERBOSE: true
 
-OUTPUT_DIR: '/output/stage1'
+OUTPUT_DIR: '/results/stage1'
 # misc
 LOADER:
   JOINT: True
