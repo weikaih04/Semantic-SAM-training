@@ -171,7 +171,23 @@ class InteractiveEvaluator(DatasetEvaluator):
             results[result_str] = pred_noc[str(self.all_ious[idx])]
         
         results['miou@iter{}'.format(self.iou_iter)] = pred_noc['iou_max_iter']
+        
         # print("results ", results)
         self._logger.info(results)
+
+        # Save results log to a file
+        results_dir = "/results"
+        if not os.path.exists(results_dir):
+            os.makedirs(results_dir)
+        
+        log_file = os.path.join(results_dir, "evaluate_result.txt")
+        with open(log_file, "w") as log:
+            log.write("Interactive Evaluation Results\n")
+            log.write("-" * 40 + "\n")
+            for key, value in results.items():
+                log.write(f"{key}: {value}\n")
+            log.write("Results are indexed by interaction in the dataset.\n")
         # draw_iou_curve(self.iou_list, self._output_dir)
         return {'interactive': results}
+
+    
