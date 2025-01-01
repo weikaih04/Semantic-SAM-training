@@ -10,6 +10,8 @@ from detectron2.data import MetadataCatalog
 from detectron2.utils.comm import all_gather, gather, is_main_process, synchronize
 from detectron2.evaluation.evaluator import DatasetEvaluator
 
+import os
+import time
 
 class JointBoxPointInteractiveEvaluator(DatasetEvaluator):
     def __init__(
