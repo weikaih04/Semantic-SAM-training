@@ -182,13 +182,27 @@ class InteractiveEvaluator(DatasetEvaluator):
         if not os.path.exists(results_dir):
             os.makedirs(results_dir)
         
-        log_file = os.path.join(results_dir, "evaluate_result.txt")
-        with open(log_file, "w") as log:
-            log.write("Interactive Evaluation Results\n")
-            log.write("-" * 40 + "\n")
-            for key, value in results.items():
-                log.write(f"{key}: {value}\n")
-            log.write("Results are indexed by interaction in the dataset.\n")
+
+        # Define the log file path
+        log_path = os.path.join(results_dir, "evaluate_result.json")
+
+        # Load existing log results if the file exists
+        if os.path.exists(log_path):
+            with open(log_path, "r") as log_file:
+                log_result = json.load(log_file)
+        else:
+            log_result = []
+
+        # Add a new entry with a timestamp
+        log_entry = {
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "results": results
+        }
+        log_result.append(log_entry)
+
+        # Save the updated log results back to the file
+        with open(log_path, "w") as log_file:
+            json.dump(log_result, log_file, indent=4)
         # draw_iou_curve(self.iou_list, self._output_dir)
         return {'interactive': results}
 
