@@ -192,6 +192,8 @@ class InteractiveEvaluator(DatasetEvaluator):
         if os.path.exists(log_path):
             with open(log_path, "r") as log_file:
                 log_result = json.load(log_file)
+                if log_result is None:
+                    log_result = []
         else:
             log_result = []
 
