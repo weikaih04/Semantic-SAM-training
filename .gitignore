@@ -1,5 +1,6 @@
 .gitignore
 .gitattributes
+/wandb/*
 __pycache__
 */__pycache__
 */*/__pycache__

@@ -402,7 +402,8 @@ class Trainer(DefaultTrainer):
                     start_data_time = time.perf_counter()
 
             # evaluate
-            results = evaluator.evaluate()
+            # print(cfg.SOLVER.STEPS)
+            results = evaluator.evaluate(step=cfg.SOLVER.STEPS)
         model = model.train().cuda()
 
 def setup(args):

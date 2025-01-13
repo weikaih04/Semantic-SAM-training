@@ -137,7 +137,7 @@ class InteractiveEvaluator(DatasetEvaluator):
         pred_noc['iou_max_iter'] = sum([x.item() for x in iou_before_max_gather]) / num_samples
         return pred_noc
 
-    def evaluate(self):
+    def evaluate(self, step):
         pred_noc = self.compute_noc()
 
         if self._distributed and (not is_main_process()):
@@ -200,6 +200,7 @@ class InteractiveEvaluator(DatasetEvaluator):
         # Add a new entry with a timestamp
         log_entry = {
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "steps": step, 
             "results": results
         }
         log_result.append(log_entry)
