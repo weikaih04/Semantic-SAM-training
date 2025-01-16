@@ -1,12 +1,3 @@
-# import debugpy
-# try:
-#     # 5678 is the default attach port in the VS Code debug configurations. Unless a host and port are specified, host defaults to 127.0.0.1
-#     debugpy.listen(("localhost", 9501))
-#     print("Waiting for debugger attach")
-#     debugpy.wait_for_client()
-# except Exception as e:
-#     pass
-
 # ------------------------------------------------------------------------
 # Copyright (c) MicroSoft, Inc. and its affiliates.
 # Modified from OpenSeed https://github.com/IDEA-Research/OpenSeed by Feng Li (fliay@connect.ust.hk).
@@ -411,8 +402,7 @@ class Trainer(DefaultTrainer):
                     start_data_time = time.perf_counter()
 
             # evaluate
-            # print(cfg.SOLVER.STEPS)
-            results = evaluator.evaluate(step=iters_after_start)
+            results = evaluator.evaluate()
         model = model.train().cuda()
 
 def setup(args):
