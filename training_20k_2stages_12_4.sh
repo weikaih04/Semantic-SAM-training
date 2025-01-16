@@ -6,6 +6,14 @@ echo "Number of GPUs: $n"
 echo "Stage 1 Iterations: $stage1_iter"
 echo "Stage 2 Iterations: $stage2_iter"
 
+python image_list_preprocess.py --base_path /tmp_dataset/meta_sa/sa_000000 \
+                                --default_path /tmp_dataset/meta_sa/sa_000000 \
+                                --output_file image_list.da
+
+python image_list_preprocess.py --base_path /sam_dataset/meta_sa/sa_000000 \
+                                --default_path /sam_dataset/meta_sa/sa_000000 \
+                                --output_file image_list.da
+
 export SAM_JSON="/tmp_dataset"
 export SAM_DATASETS="/tmp_dataset"
 export DATASET="/datasets"
