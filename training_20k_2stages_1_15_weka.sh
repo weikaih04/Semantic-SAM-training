@@ -35,8 +35,8 @@ python image_list_preprocess.py --base_path $sam_dataset/meta_sa/sa_000000 \
                                 --output_file image_list.da
 
 # # Update environment variable for Stage 2
-# export SAM_JSON="$tmp_dataset"
-# export SAM_DATASETS="$tmp_dataset"
+export SAM_JSON="$sam_dataset"
+export SAM_DATASETS="$sam_dataset"
 
 # # Stage 2 training
 # python train_net.py --resume --num-gpus $n --config-file configs/two_stages/stage2_12_3.yaml \
