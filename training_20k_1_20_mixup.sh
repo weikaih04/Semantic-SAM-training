@@ -1,19 +1,18 @@
 # Variables for dataset paths
-tmp_dataset=${TMP_DATASET_PATH:-"/tmp_dataset"}
-sam_dataset=${SAM_DATASET_PATH:-"/sam_dataset"}
-num_tmp_samples=${NUM_TMP_SAMPLES:-100000}
-num_sam_samples=${NUM_SAM_SAMPLES:-100000}
-
-n=${1:-8}
-stage1_iter=${2:-10000}
+tmp_dataset=${1:-"/tmp_dataset"}
+sam_dataset=${2:-"/sam_dataset"}
+num_tmp_samples=${3:-100000}
+num_sam_samples=${4:-100000}
+n=${5:-8}
+stage1_iter=${6:-10000}
 
 echo "Number of GPUs: $n"
 echo "Stage 1 Iterations: $stage1_iter"
 
 python mix_data.py --folder1 /tmp_dataset/meta_sa/sa_000000 \
                    --folder2 /sam_dataset/meta_sa/sa_000000 \
-                   --num_from_folder1 3 \
-                   --num_from_folder2 5 \
+                   --num_from_folder1 $num_tmp_samples \
+                   --num_from_folder2 $num_sam_samples \
                    --output_folder /final_dataset/meta_sa/sa_000000
 
 
