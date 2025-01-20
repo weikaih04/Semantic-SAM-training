@@ -19,10 +19,10 @@ def preprocess_images(base_path, default_path, output_file):
         files = os.listdir(base_path)
 
         for f in files:
-            if f.endswith('.jpg'):
-                data_list.append({
-                    'img_name': os.path.join(default_path, f),
-                    'ann_name': os.path.join(default_path, f.split('.')[0] + '.json')
+            if f.endswith(".jpg") or f.endswith(".png"):
+                image_list.append({
+                    "img_name": os.path.join(default_path, f),
+                    "ann_name": os.path.join(default_path, f.replace('.jpg', '.json').replace('.png', '.json').replace('_relight', ''))
                 })
         
         # Save the data
