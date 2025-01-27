@@ -11,12 +11,12 @@ def mix_datasets(folder1, folder2, output_folder, num_from_folder1, num_from_fol
         images = sorted([f for f in os.listdir(folder) if f.endswith(('.jpg', '.png'))])
         jsons = sorted([f for f in os.listdir(folder) if f.endswith('.json')])
         
-        # Ensure images and JSONs match by name (excluding extensions)
-        image_dict = {os.path.splitext(f)[0]: f for f in images}
+        # Create lookup dictionaries for matching
+        image_dict = {os.path.splitext(f.replace('_relight', ''))[0]: f for f in images}
         json_dict = {os.path.splitext(f)[0]: f for f in jsons}
 
-        # Find matching pairs
-        pairs = [(image_dict[key], json_dict[key]) for key in image_dict if key in json_dict]
+        # Find matching pairs while preserving original filenames
+        pairs = [(image_dict[key], json_dict[key]) for key in json_dict if key in image_dict]
         return pairs
 
     pairs1 = get_pairs(folder1)[:num_from_folder1]
