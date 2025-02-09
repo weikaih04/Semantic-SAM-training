@@ -141,8 +141,9 @@ MODEL:
     SAM: True
     PASCAL: False
     RE_POINT: True
-    NUM_INTERACTIVE_TOKENS: 6
+    NUM_INTERACTIVE_TOKENS: 1
     MAX_NUM_INSTANCE: 60
+    MANY_TO_ONE: True
     TEST:
       SEMANTIC_ON: True
       INSTANCE_ON: True
