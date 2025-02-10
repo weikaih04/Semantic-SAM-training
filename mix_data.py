@@ -2,11 +2,12 @@ import os
 import shutil
 import argparse
 
+
 def mix_datasets(folder1, folder2, output_folder, num_from_folder1, num_from_folder2):
     # Ensure output directory exists
     os.makedirs(output_folder, exist_ok=True)
 
-    # Get ordered pairs from both folders
+    # Get ordered pairs from a folder
     def get_pairs(folder):
         images = sorted([f for f in os.listdir(folder) if f.endswith(('.jpg', '.png'))])
         jsons = sorted([f for f in os.listdir(folder) if f.endswith('.json')])
@@ -19,11 +20,18 @@ def mix_datasets(folder1, folder2, output_folder, num_from_folder1, num_from_fol
         pairs = [(image_dict[key], json_dict[key]) for key in json_dict if key in image_dict]
         return pairs
 
-    pairs1 = get_pairs(folder1)[:num_from_folder1]
-    pairs2 = get_pairs(folder2)[:num_from_folder2]
+    # Get all matching pairs from both folders
+    all_pairs1 = get_pairs(folder1)
+    all_pairs2 = get_pairs(folder2)
+    
+    print(f"Folder1 contains {len(all_pairs1)} image-JSON pairs.")
+    print(f"Folder2 contains {len(all_pairs2)} image-JSON pairs.")
 
-    # Combine the selected pairs in original order
+    # Select the desired number of pairs from each folder
+    pairs1 = all_pairs1[:num_from_folder1]
+    pairs2 = all_pairs2[:num_from_folder2]
     selected_pairs = pairs1 + pairs2
+    print(f"Total pairs selected for the output folder: {len(selected_pairs)}.")
 
     # Copy selected pairs to the output folder with sequential naming
     for idx, (img_file, json_file) in enumerate(selected_pairs):
@@ -32,6 +40,11 @@ def mix_datasets(folder1, folder2, output_folder, num_from_folder1, num_from_fol
         shutil.copy(os.path.join(src_folder, img_file), os.path.join(output_folder, f"{idx}{ext}"))
         shutil.copy(os.path.join(src_folder, json_file), os.path.join(output_folder, f"{idx}.json"))
 
+    # After copying, count the files in the output folder
+    output_files = os.listdir(output_folder)
+    image_count = len([f for f in output_files if f.endswith(('.jpg', '.png'))])
+    json_count = len([f for f in output_files if f.endswith('.json')])
+    print(f"Output folder now contains {image_count} image files and {json_count} JSON files.")
     print(f"Dataset mixed successfully in {output_folder}")
 
 if __name__ == "__main__":
